@@ -139,6 +139,24 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
+// Animação da gota de água quando a seção está visível
+const waterIllustration = document.querySelector('.water-illustration');
+if (waterIllustration) {
+    const waterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                waterObserver.unobserve(entry.target); // Para a animação acontecer apenas uma vez
+            }
+        });
+    }, {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    waterObserver.observe(waterIllustration);
+}
+
 // Aplica animação aos elementos da página principal
 document.querySelectorAll('.servico-card, .partner-card, .solucoes-image, .water-content, .atuacao-text').forEach(el => {
     el.style.opacity = '0';
