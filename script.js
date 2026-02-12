@@ -4,15 +4,42 @@ let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
-    
+
     if (currentScroll > 100) {
         header.classList.add('scrolled');
     } else {
         header.classList.remove('scrolled');
     }
-    
+
     lastScroll = currentScroll;
 });
+
+// Menu hamburger toggle
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.nav');
+
+if (menuToggle && nav) {
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        nav.classList.toggle('active');
+    });
+
+    // Fecha menu ao clicar em um link
+    nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            nav.classList.remove('active');
+        });
+    });
+
+    // Fecha menu ao clicar fora
+    document.addEventListener('click', (e) => {
+        if (!header.contains(e.target)) {
+            menuToggle.classList.remove('active');
+            nav.classList.remove('active');
+        }
+    });
+}
 
 // Carrossel do Hero (apenas na página principal)
 const heroSlides = document.querySelectorAll('.hero-slide');
