@@ -550,6 +550,21 @@ html::-webkit-scrollbar {
     max-width: 85%;
 }
 
+/* Logos específicas maiores: geocontrole, milplan, mrv, scl */
+.clientes-section .partner-card img[alt="Geocontrole"],
+.clientes-section .partner-card img[alt="Milplan"],
+.clientes-section .partner-card img[alt="Arena MRV"],
+.clientes-section .partner-card img[alt="SCL Salum Construções"] {
+    max-height: 95px;
+    max-width: 95%;
+}
+
+/* Geocontrole ainda maior */
+.clientes-section .partner-card img[alt="Geocontrole"] {
+    max-height: 110px;
+    max-width: 98%;
+}
+
 /* Card centralizado para última linha ímpar */
 .partner-card.partner-card-center {
     grid-column: 2 / 4;
@@ -885,6 +900,21 @@ html::-webkit-scrollbar {
         max-width: 75%;
     }
 
+    /* Logos específicas maiores: geocontrole, milplan, mrv, scl - Tablet */
+    .clientes-section .partner-card img[alt="Geocontrole"],
+    .clientes-section .partner-card img[alt="Milplan"],
+    .clientes-section .partner-card img[alt="Arena MRV"],
+    .clientes-section .partner-card img[alt="SCL Salum Construções"] {
+        max-height: 65px;
+        max-width: 90%;
+    }
+
+    /* Geocontrole ainda maior no tablet */
+    .clientes-section .partner-card img[alt="Geocontrole"] {
+        max-height: 80px;
+        max-width: 95%;
+    }
+
     .clientes-section {
         padding: 60px 0 80px;
     }
@@ -1034,19 +1064,34 @@ html::-webkit-scrollbar {
     }
 
     .clientes-section .partner-card img {
-        max-height: 40px;
-        max-width: 75%;
+        max-height: 55px;
+        max-width: 85%;
     }
 
     .clientes-section .partner-card.partner-card-large img,
     .clientes-section .partner-card.partner-card-xlarge img {
-        max-height: 45px;
-        max-width: 80%;
+        max-height: 60px;
+        max-width: 90%;
     }
 
     .clientes-section .partner-card.partner-card-small img {
-        max-height: 35px;
-        max-width: 70%;
+        max-height: 50px;
+        max-width: 80%;
+    }
+
+    /* Logos específicas maiores: geocontrole, milplan, mrv, scl - Mobile 768px */
+    .clientes-section .partner-card img[alt="Geocontrole"],
+    .clientes-section .partner-card img[alt="Milplan"],
+    .clientes-section .partner-card img[alt="Arena MRV"],
+    .clientes-section .partner-card img[alt="SCL Salum Construções"] {
+        max-height: 65px;
+        max-width: 92%;
+    }
+
+    /* Geocontrole ainda maior no mobile 768px */
+    .clientes-section .partner-card img[alt="Geocontrole"] {
+        max-height: 75px;
+        max-width: 95%;
     }
 
     .servicos-grid {
@@ -1192,19 +1237,34 @@ html::-webkit-scrollbar {
     }
 
     .clientes-section .partner-card img {
-        max-height: 35px;
-        max-width: 70%;
+        max-height: 50px;
+        max-width: 85%;
     }
 
     .clientes-section .partner-card.partner-card-large img,
     .clientes-section .partner-card.partner-card-xlarge img {
-        max-height: 40px;
-        max-width: 75%;
+        max-height: 55px;
+        max-width: 90%;
     }
 
     .clientes-section .partner-card.partner-card-small img {
-        max-height: 30px;
-        max-width: 65%;
+        max-height: 45px;
+        max-width: 80%;
+    }
+
+    /* Logos específicas maiores: geocontrole, milplan, mrv, scl - Mobile 480px */
+    .clientes-section .partner-card img[alt="Geocontrole"],
+    .clientes-section .partner-card img[alt="Milplan"],
+    .clientes-section .partner-card img[alt="Arena MRV"],
+    .clientes-section .partner-card img[alt="SCL Salum Construções"] {
+        max-height: 60px;
+        max-width: 90%;
+    }
+
+    /* Geocontrole ainda maior no mobile 480px */
+    .clientes-section .partner-card img[alt="Geocontrole"] {
+        max-height: 70px;
+        max-width: 93%;
     }
 
     .footer-contact-info {
@@ -2303,6 +2363,11 @@ html::-webkit-scrollbar {
     .diferencial-card:nth-child(3) {
         border: none;
         border-bottom: 2px solid var(--laranja);
+    }
+
+    /* Remove borda inferior do card "Segurança e treinamento" no mobile */
+    .diferencial-card:nth-child(2) {
+        border-bottom: none;
     }
 
     .diferencial-card:last-child {
