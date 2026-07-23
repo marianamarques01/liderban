@@ -1,0 +1,279 @@
+// Menu fixo ao scroll
+const header = document.getElementById('header');
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > 100) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+
+    lastScroll = currentScroll;
+});
+
+// Menu hamburger toggle
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.nav');
+
+if (menuToggle && nav) {
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        nav.classList.toggle('active');
+    });
+
+    // Fecha menu ao clicar em um link
+    nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            nav.classList.remove('active');
+        });
+    });
+
+    // Fecha menu ao clicar fora
+    document.addEventListener('click', (e) => {
+        if (!header.contains(e.target)) {
+            menuToggle.classList.remove('active');
+            nav.classList.remove('active');
+        }
+    });
+}
+
+// Carrossel do Hero (apenas na página principal)
+const heroSlides = document.querySelectorAll('.hero-slide');
+const indicators = document.querySelectorAll('.indicator');
+let currentSlide = 0;
+let slideInterval;
+
+if (heroSlides.length > 0 && indicators.length > 0) {
+    function showSlide(index) {
+        // Remove active de todos os slides e indicadores
+        heroSlides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Adiciona active ao slide e indicador atual
+        heroSlides[index].classList.add('active');
+        indicators[index].classList.add('active');
+        
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        const next = (currentSlide + 1) % heroSlides.length;
+        showSlide(next);
+    }
+
+    function startCarousel() {
+        slideInterval = setInterval(nextSlide, 5000); // Troca a cada 5 segundos
+    }
+
+    function stopCarousel() {
+        clearInterval(slideInterval);
+    }
+
+    // Adiciona eventos aos indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            stopCarousel();
+            showSlide(index);
+            startCarousel();
+        });
+    });
+
+    // Pausa o carrossel quando o mouse está sobre o hero
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        hero.addEventListener('mouseenter', stopCarousel);
+        hero.addEventListener('mouseleave', startCarousel);
+    }
+
+    // Inicia o carrossel
+    startCarousel();
+}
+
+// Smooth scroll para links de navegação
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && href !== '#contato') {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const headerOffset = 80;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+});
+
+// Botão "Solicite mais"
+const soliciteMaisBtn = document.getElementById('solicite-mais');
+if (soliciteMaisBtn) {
+    soliciteMaisBtn.addEventListener('click', () => {
+        // Pode abrir um modal de contato ou redirecionar para um formulário
+        const whatsappUrl = 'https://wa.me/553125367500?text=Olá! Gostaria de solicitar mais informações sobre os serviços da Liderban.';
+        window.open(whatsappUrl, '_blank');
+    });
+}
+
+// Animação de entrada ao scroll (Intersection Observer)
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+// Animação da gota de água quando a seção está visível
+const waterIllustration = document.querySelector('.water-illustration');
+if (waterIllustration) {
+    const waterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                waterObserver.unobserve(entry.target); // Para a animação acontecer apenas uma vez
+            }
+        });
+    }, {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    waterObserver.observe(waterIllustration);
+}
+
+// Aplica animação aos elementos da página principal
+document.querySelectorAll('.servico-card, .partner-card, .solucoes-image, .water-content, .atuacao-text').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+});
+
+// Aplica animação aos cards de soluções (página de soluções)
+document.querySelectorAll('.solution-card').forEach((el, index) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+    observer.observe(el);
+});
+
+// Modais de Soluções
+document.querySelectorAll('.solution-card[data-modal]').forEach(card => {
+    card.addEventListener('click', (e) => {
+        e.preventDefault();
+        const modalId = card.getAttribute('data-modal');
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    });
+});
+
+// Fechar modal ao clicar no X
+document.querySelectorAll('.solucao-modal-close').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const overlay = btn.closest('.solucao-modal-overlay');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+});
+
+// Fechar modal ao clicar fora (no overlay)
+document.querySelectorAll('.solucao-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+});
+
+// Fechar modal com tecla ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.solucao-modal-overlay.active').forEach(overlay => {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+});
+
+// Carrossel do Instagram (página BanBan)
+const instagramTrack = document.querySelector('.banban-instagram__track');
+const instagramPrev = document.querySelector('.banban-instagram__arrow--prev');
+const instagramNext = document.querySelector('.banban-instagram__arrow--next');
+
+if (instagramTrack && instagramPrev && instagramNext) {
+    let instagramIndex = 0;
+
+    const getInstagramStep = () => {
+        const item = instagramTrack.querySelector('.banban-instagram__item');
+        if (!item) {
+            return 0;
+        }
+
+        const styles = window.getComputedStyle(instagramTrack);
+        const gap = parseFloat(styles.columnGap || styles.gap || '0');
+        return item.getBoundingClientRect().width + gap;
+    };
+
+    const getInstagramMaxIndex = () => {
+        const items = instagramTrack.querySelectorAll('.banban-instagram__item');
+        const viewport = instagramTrack.parentElement;
+
+        if (!items.length || !viewport) {
+            return 0;
+        }
+
+        const visibleCount = Math.max(1, Math.floor(viewport.getBoundingClientRect().width / getInstagramStep()));
+        return Math.max(0, items.length - visibleCount);
+    };
+
+    const updateInstagramTrack = () => {
+        const maxIndex = getInstagramMaxIndex();
+        instagramIndex = Math.min(instagramIndex, maxIndex);
+        instagramTrack.style.transform = `translateX(-${instagramIndex * getInstagramStep()}px)`;
+    };
+
+    instagramPrev.addEventListener('click', () => {
+        instagramIndex = Math.max(0, instagramIndex - 1);
+        updateInstagramTrack();
+    });
+
+    instagramNext.addEventListener('click', () => {
+        instagramIndex = Math.min(getInstagramMaxIndex(), instagramIndex + 1);
+        updateInstagramTrack();
+    });
+
+    window.addEventListener('resize', updateInstagramTrack);
+    updateInstagramTrack();
+}
+
+// Adiciona comportamento ao ícone de contato flutuante
+const contactIcon = document.querySelector('.floating-icon.contact');
+if (contactIcon) {
+    contactIcon.addEventListener('click', (e) => {
+        e.preventDefault();
+        const footer = document.querySelector('.footer');
+        if (footer) {
+            footer.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+}

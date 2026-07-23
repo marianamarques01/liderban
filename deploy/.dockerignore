@@ -1,0 +1,6 @@
+../app/public/wp-content/themes/twenty*
+../app/public/wp-content/plugins/akismet
+../app/public/wp-content/plugins/hello.php
+../logs
+../conf
+.git

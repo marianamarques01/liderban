@@ -1,0 +1,21 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Secrets
+.env
+deploy/.env
+
+# Debug / tooling
+.playwright-mcp/
+
+# WordPress uploads (conteúdo gerado pelo usuário)
+app/public/wp-content/uploads/*
+!app/public/wp-content/uploads/.gitkeep
+
+# Local by Flywheel
+app/public/local-xdebuginfo.php
